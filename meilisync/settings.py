@@ -5,7 +5,7 @@ from pydantic_settings import BaseSettings
 
 from meilisync.enums import ProgressType, SourceType
 from meilisync.plugin import load_plugin
-
+from loguru import logger
 
 class Source(BaseModel):
     type: SourceType
@@ -29,6 +29,11 @@ class BasePlugin(BaseModel):
         plugins = []
         for plugin in self.plugins or []:
             p = load_plugin(plugin)
+            logger.debug(plugin)
+            logger.debug(p)
+            logger.debug(p.is_global)
+            logger.debug(source)
+
             if p.is_global:
                 plugins.append(p(source=source))
             else:
