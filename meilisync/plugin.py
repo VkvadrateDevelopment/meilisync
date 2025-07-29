@@ -8,6 +8,9 @@ from meilisync.schemas import Event
 class Plugin:
     is_global = False
 
+    def __init__(self, source=None):
+        self.source = source
+
     async def pre_event(self, event: Event):
         logger.debug(f"pre_event: {event}, is_global: {self.is_global}")
         return event

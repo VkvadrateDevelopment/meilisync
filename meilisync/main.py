@@ -53,7 +53,7 @@ def callback(
             **settings.source.model_dump(exclude={"type"}),
         )
         meilisearch = settings.meilisearch
-        meili = Meili(meilisearch.api_url, meilisearch.api_key, settings.plugins_cls())
+        meili = Meili(meilisearch.api_url, meilisearch.api_key, settings.plugins_cls(source=source))
         context.obj["current_progress"] = current_progress
         context.obj["source"] = source
         context.obj["meili"] = meili

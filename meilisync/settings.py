@@ -25,12 +25,12 @@ class MeiliSearch(BaseModel):
 class BasePlugin(BaseModel):
     plugins: List[str] = []
 
-    def plugins_cls(self):
+    def plugins_cls(self, source=None):
         plugins = []
         for plugin in self.plugins or []:
             p = load_plugin(plugin)
             if p.is_global:
-                plugins.append(p())
+                plugins.append(p(source=source))
             else:
                 plugins.append(p)
         return plugins
