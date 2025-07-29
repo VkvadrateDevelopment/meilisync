@@ -55,7 +55,8 @@ def callback(
         )
         for sync in settings.sync:
             sync.source = source
-            logger.debug(sync.source,sync)
+            logger.debug(sync.source)
+            logger.debug(sync)
             # Инициализация глобальных плагинов с передачей sync
             # sync.global_plugins = settings.plugins_cls(sync=sync)
         meilisearch = settings.meilisearch
