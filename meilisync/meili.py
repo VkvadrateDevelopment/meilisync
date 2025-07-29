@@ -98,7 +98,7 @@ class Meili:
                 event = await plugin.pre_event(event)
             else:
                 event = await plugin().pre_event(event)
-        for plugin in sync.plugins_cls(source=sync.source if hasattr(sync, 'source') else None):
+        for plugin in sync.plugins_cls(sync=sync):
             if isinstance(plugin, Plugin):
                 event = await plugin.pre_event(event)
             else:
@@ -111,7 +111,7 @@ class Meili:
                 event = await plugin.post_event(event)
             else:
                 event = await plugin().post_event(event)
-        for plugin in sync.plugins_cls(source=sync.source if hasattr(sync, 'source') else None):
+        for plugin in sync.plugins_cls(sync=sync):
             if isinstance(plugin, Plugin):
                 event = await plugin.post_event(event)
             else:
