@@ -53,10 +53,10 @@ def callback(
             tables=settings.tables,
             **settings.source.model_dump(exclude={"type"}),
         )
-        for sync in settings.sync:
-            sync.source = source
-            logger.debug(sync.source)
-            logger.debug(sync)
+        # for sync in settings.sync:
+        #     sync.source = source
+        #     logger.debug(sync.source)
+        #     logger.debug(sync)
             # Инициализация глобальных плагинов с передачей sync
             # sync.global_plugins = settings.plugins_cls(sync=sync)
         meilisearch = settings.meilisearch
