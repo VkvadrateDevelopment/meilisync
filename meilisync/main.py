@@ -34,6 +34,7 @@ def callback(
         settings = Settings.model_validate(yaml.safe_load(config))
         if settings.debug:
             logger.debug(settings)
+            logger.debug(settings.source)
         if settings.sentry:
             sentry = settings.sentry
 
