@@ -48,7 +48,6 @@ def callback(
             **settings.progress.model_dump(exclude={"type"})
         )
         current_progress = await progress.get()
-        # logger.debug("source=",source)
         source = get_source(settings.source.type)(
             progress=current_progress,
             tables=settings.tables,
