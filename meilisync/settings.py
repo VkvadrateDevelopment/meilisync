@@ -35,7 +35,7 @@ class BasePlugin(BaseModel):
             logger.debug(source)
             logger.debug(sync)
             if p.is_global:
-                plugins.append(p(source=source))
+                plugins.append(p(source=source,sync=sync))
             else:
                 plugins.append(p)
         return plugins
