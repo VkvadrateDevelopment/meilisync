@@ -47,7 +47,7 @@ class Sync(BasePlugin):
     full: bool = False
     index: str | None = None
     fields: dict | None = None
-    source: any = None  # или Source, если хотите типизацию
+    source: Source | None = None  # или Source, если хотите типизацию
 
     @property
     def index_name(self):
