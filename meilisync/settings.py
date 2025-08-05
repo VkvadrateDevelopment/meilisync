@@ -43,6 +43,7 @@ class BasePlugin(BaseModel):
                 logger.debug(self.source)
                 logger.debug(source)
                 logger.debug(sync)
+                logger.debug(isinstance(self,BasePlugin))
                 logger.debug(isinstance(self,Settings))
                 logger.debug(isinstance(self,Sync))
                 if p.is_global:
