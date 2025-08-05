@@ -1,6 +1,6 @@
 from typing import List
 from typing import Dict, Any
-from meilisync.plugin import Plugin
+# from meilisync.plugin import Plugin
 
 from pydantic import BaseModel, Extra
 from pydantic_settings import BaseSettings
@@ -26,8 +26,8 @@ class MeiliSearch(BaseModel):
 
 class BasePlugin(BaseModel):
     plugins: List[str] = []
-    plugins_instances : Dict[str, Plugin] = {}
-    # plugins_instances : Dict[str, Any] = {}
+    # plugins_instances : Dict[str, Plugin] = {}
+    plugins_instances : Dict[str, Any] = {}
 
     def plugins_cls(self, source=None,sync=None):
         plugins = []
