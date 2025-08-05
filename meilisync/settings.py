@@ -43,6 +43,8 @@ class BasePlugin(BaseModel):
                 logger.debug(self.source)
                 logger.debug(source)
                 logger.debug(sync)
+                logger.debug(isinstance(self,Settings))
+                logger.debug(isinstance(self,Sync))
                 if p.is_global:
                     self.plugins_instances[plugin]=p(source=source,sync=sync)
                     plugins.append(self.plugins_instances[plugin])
