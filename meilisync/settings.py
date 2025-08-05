@@ -1,4 +1,6 @@
 from typing import List
+from typing import Dict, Any
+from plugin import Plugin
 
 from pydantic import BaseModel, Extra
 from pydantic_settings import BaseSettings
@@ -24,20 +26,26 @@ class MeiliSearch(BaseModel):
 
 class BasePlugin(BaseModel):
     plugins: List[str] = []
+    plugins_instances : Dict[str, Plugin] = {}
+    # plugins_instances : Dict[str, Any] = {}
 
     def plugins_cls(self, source=None,sync=None):
         plugins = []
         for plugin in self.plugins or []:
-            p = load_plugin(plugin)
-            logger.debug(plugin)
-            logger.debug(p)
-            logger.debug(p.is_global)
-            logger.debug(source)
-            logger.debug(sync)
-            if p.is_global:
-                plugins.append(p(source=source,sync=sync))
+            if plugin in self.plugins_instances:
+                plugins.append(self.plugins_instances[plugin])
             else:
-                plugins.append(p)
+                p = load_plugin(plugin)
+                logger.debug(plugin)
+                logger.debug(p)
+                logger.debug(p.is_global)
+                logger.debug(source)
+                logger.debug(sync)
+                if p.is_global:
+                    self.plugins_instances[plugin]=p(source=source,sync=sync)
+                    plugins.append(self.plugins_instances[plugin])
+                else:
+                    plugins.append(p)
         return plugins
 
 
