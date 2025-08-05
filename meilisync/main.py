@@ -54,13 +54,9 @@ def callback(
             **settings.source.model_dump(exclude={"type"}),
         )
         for sync in settings.sync:
-             # sync.source = source
-             logger.debug(sync)
              sync.plugins_cls(source=source)
 
         meilisearch = settings.meilisearch
-        # logger.debug("source=",source)
-        # logger.debug("source=",settings.source)
         meili = Meili(meilisearch.api_url, meilisearch.api_key, settings.plugins_cls(source=source))
         context.obj["current_progress"] = current_progress
         context.obj["source"] = source

@@ -30,7 +30,7 @@ class BasePlugin(BaseModel):
     # plugins_instances : Dict[str, Plugin] = {}
     plugins_instances : Dict[str, Any] = {}
 
-    def plugins_cls(self, source=None,sync=None):
+    def plugins_cls(self, source=None):
         plugins = []
         for plugin in self.plugins or []:
             if plugin in self.plugins_instances:
@@ -42,12 +42,11 @@ class BasePlugin(BaseModel):
                 logger.debug(p.is_global)
                 logger.debug(self.source)
                 logger.debug(source)
-                logger.debug(sync)
-                logger.debug(isinstance(self,BasePlugin))
-                logger.debug(isinstance(self,Settings))
-                logger.debug(isinstance(self,Sync))
                 if p.is_global:
-                    self.plugins_instances[plugin]=p(source=source,sync=sync)
+                    if isinstance(self,Sync):
+                        self.plugins_instances[plugin]=p(source=source,sync=self)
+                    else:
+                        self.plugins_instances[plugin]=p(source=source)
                     plugins.append(self.plugins_instances[plugin])
                 else:
                     plugins.append(p)
