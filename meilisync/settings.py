@@ -1,6 +1,6 @@
 from typing import List
 from typing import Dict, Any
-from plugin import Plugin
+from meilisync.plugin import Plugin
 
 from pydantic import BaseModel, Extra
 from pydantic_settings import BaseSettings
