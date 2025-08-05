@@ -54,7 +54,8 @@ def callback(
             **settings.source.model_dump(exclude={"type"}),
         )
         for sync in settings.sync:
-             sync.source = source
+             # sync.source = source
+             sync.plugins_cls(source=source)
 
         meilisearch = settings.meilisearch
         # logger.debug("source=",source)
