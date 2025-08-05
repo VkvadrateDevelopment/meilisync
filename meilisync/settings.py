@@ -25,6 +25,7 @@ class MeiliSearch(BaseModel):
 
 
 class BasePlugin(BaseModel):
+    source: Source | None = None
     plugins: List[str] = []
     # plugins_instances : Dict[str, Plugin] = {}
     plugins_instances : Dict[str, Any] = {}
@@ -39,6 +40,7 @@ class BasePlugin(BaseModel):
                 logger.debug(plugin)
                 logger.debug(p)
                 logger.debug(p.is_global)
+                logger.debug(self.source)
                 logger.debug(source)
                 logger.debug(sync)
                 if p.is_global:
@@ -55,7 +57,6 @@ class Sync(BasePlugin):
     full: bool = False
     index: str | None = None
     fields: dict | None = None
-    source: Source | None = None  # или Source, если хотите типизацию
 
     @property
     def index_name(self):
@@ -80,7 +81,6 @@ class Sentry(BaseModel):
 class Settings(BaseSettings, BasePlugin):
     progress: Progress
     debug: bool = False
-    source: Source
     meilisearch: MeiliSearch
     sync: List[Sync]
     sentry: Sentry | None = None
