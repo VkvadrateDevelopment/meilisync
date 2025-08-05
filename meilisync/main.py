@@ -55,6 +55,7 @@ def callback(
         )
         for sync in settings.sync:
              # sync.source = source
+             logger.debug(sync)
              sync.plugins_cls(source=source)
 
         meilisearch = settings.meilisearch
