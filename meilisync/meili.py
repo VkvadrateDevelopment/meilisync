@@ -125,14 +125,14 @@ class Meili:
         for event in events:
             await self.handle_plugins_pre(sync, event)
         task = None
-        if event_type == EventType.create:
+        if event_type in [ EventType.create, EventType.update ]:
             task = await index.add_documents(
                 [event.mapping_data(sync.fields) for event in events], primary_key=sync.pk
             )
-        elif event_type == EventType.update:
-            task = await index.update_documents(
-                [event.mapping_data(sync.fields) for event in events], primary_key=sync.pk
-            )
+        # elif event_type == EventType.update:
+        #     task = await index.update_documents(
+        #         [event.mapping_data(sync.fields) for event in events], primary_key=sync.pk
+        #     )
         elif event_type == EventType.delete:
             task = await index.delete_documents([str(event.data[sync.pk]) for event in events])
         for event in events:
@@ -142,10 +142,10 @@ class Meili:
     async def handle_event(self, event: Event, sync: Sync):
         event = await self.handle_plugins_pre(sync, event)
         index = self.client.index(sync.index_name)
-        if event.type == EventType.create:
+        if event.type in [ EventType.create, EventType.update ]:
             await index.add_documents([event.mapping_data(sync.fields)], primary_key=sync.pk)
-        elif event.type == EventType.update:
-            await index.update_documents([event.mapping_data(sync.fields)], primary_key=sync.pk)
+        # elif event.type == EventType.update:
+        #     await index.update_documents([event.mapping_data(sync.fields)], primary_key=sync.pk)
         elif event.type == EventType.delete:
             await index.delete_documents([str(event.data[sync.pk])])
         await self.handle_plugins_post(sync, event)
