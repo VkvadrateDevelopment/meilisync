@@ -128,7 +128,7 @@ class MySQL(Source):
                         )
             except OperationalError as e:
                 errcode, _ = e.args
-                if errcode in [1236]:
+                if errcode == 1236:
                     logger.exception(f"Binlog stream error: {e}, exiting...")
                     sys.exit(66)    
                 logger.exception(f"Binlog stream error: {e}, sleep 10s and retry...")
