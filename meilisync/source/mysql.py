@@ -1,5 +1,6 @@
 import asyncio
 from typing import List
+import sys
 
 import asyncmy
 from asyncmy.cursors import DictCursor
@@ -126,6 +127,10 @@ class MySQL(Source):
                             progress=self.progress,
                         )
             except OperationalError as e:
+                errcode, _ = e.args
+                if errcode in (1236):
+                    logger.exception(f"Binlog stream error: {e}, exiting...")
+                    sys.exit(66)    
                 logger.exception(f"Binlog stream error: {e}, sleep 10s and retry...")
                 await asyncio.sleep(10)
                 try:
